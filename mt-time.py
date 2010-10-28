@@ -10,8 +10,13 @@ class MultiTouchTime(MTWidget):
         self.touches = []
         self.start_time = 0.0
         self.trial_done = True
-        self.sessions = pickle.load(open('gesture_time.data', 'r'))
-        self.user = max(self.sessions.keys()) if self.sessions.keys() else "0"
+	try:
+	        self.sessions = pickle.load(open('gesture_time.data', 'r'))
+        	self.user = max(self.sessions.keys()) if self.sessions.keys() else "0"
+	except:
+		self.sessions = {}
+		pickle.dump(self.sessions, open("gesture_time.data", "w"))
+		self.user = 0
         self.start_session()
 
     def keyboard(self, key, scan, unicode):
